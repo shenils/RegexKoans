@@ -22,7 +22,7 @@
 		var jasmineEnv = jasmine.getEnv();
 		jasmineEnv.updateInterval = 1000;
 		jasmineEnv.addReporter(new jasmine.JsApiReporter());
-		var currentWindowOnload = window.onload;
+		var currentWindowOnload = window.onload;	
 		window.onload = function() {
 			if (currentWindowOnload) {
 				currentWindowOnload();

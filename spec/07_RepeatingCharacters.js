@@ -4,7 +4,7 @@ describe("Repeating Characters", function() {
     // If a character is optional, follow it with a ?
     // in the pattern
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^soo?n$/;
     
     expect( 'son'   ).toMatch(fixThisPattern);
     expect( 'soon'  ).toMatch(fixThisPattern);
@@ -14,7 +14,7 @@ describe("Repeating Characters", function() {
   it('use + to match One Or More of a character', function() {
     var thisPatternWorks = /^so+n$/
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^x\s+y$/;
     
     expect( 'son'        ).toMatch(thisPatternWorks);
     expect( 'soon'       ).toMatch(thisPatternWorks);
@@ -27,7 +27,7 @@ describe("Repeating Characters", function() {
   });
   
   it('use * to match Zero Or More of a character', function() {
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^x\s*y$/;
     
     expect( 'x y'     ).toMatch(fixThisPattern);
     expect( 'x     y' ).toMatch(fixThisPattern);
@@ -38,7 +38,7 @@ describe("Repeating Characters", function() {
     
     var thisPatternWorks = /^xy{3}z$/;
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^614\-*5{3}\-*1234$/;
     
     expect( 'xyyyz' ).toMatch(thisPatternWorks);
     
@@ -53,7 +53,7 @@ describe("Repeating Characters", function() {
     
     var thisPatternWorks = /^xy{2,5}z$/;
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^.{1,5}$/;
     
     expect( 'xyyyz'   ).toMatch(thisPatternWorks);
     expect( 'xyyz'    ).toMatch(thisPatternWorks);
@@ -68,7 +68,7 @@ describe("Repeating Characters", function() {
   });
   
   it('use {n,} for "at least n" and {,m} for "not more than m" repeated characters', function() {
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^.{4,}$/;
     
     expect( 'a  b' ).toMatch(fixThisPattern);
     expect( 'a                                                                 b' ).toMatch(fixThisPattern);
@@ -85,7 +85,7 @@ describe("Repeating Characters", function() {
     //   There must be a fractional part (after the decimal)
     //   Either or both of these parts may be zero (0)
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^\d+[.]\d+$/;
     
     expect( '3.14159'     ).toMatch(fixThisPattern);
     expect( '0.9'         ).toMatch(fixThisPattern);
@@ -103,7 +103,7 @@ describe("Repeating Characters", function() {
   });
   
   it('repeater characters are special characters that must be backslash-escaped to match in strings', function() {
-    expect( 'x*y=z' ).toMatch(/^___$/);
+    expect( 'x*y=z' ).toMatch(/^x\*y=z$/);
   });
   
   it('.* can match any amount of anything... except newline', function() {
@@ -111,17 +111,17 @@ describe("Repeating Characters", function() {
     expect( ''    ).toMatch(/^.*$/);   // here are a couple of free ones for you
     expect( 'jgi493ujitgj8g*##@!uiofg893ign4q389A*(eu89*(#=U*@UJ()()0jijge' ).toMatch(/^.*$/);
     
-    expect( '___' ).not.toMatch(/^.*$/);   // fix this string to make the test pass
+    expect( '\n' ).not.toMatch(/^.*$/);   // fix this string to make the test pass
   });
   
   it('use a character set to match anything, including newline', function() {
 
-    expect( 'The quick brown fox\njumped over the lazy dog.\n' ).toMatch(/^___*$/);
+    expect( 'The quick brown fox\njumped over the lazy dog.\n' ).toMatch(/^.*\n.*\n$/);
 
   });
   
   it('repeater characters are NOT special characters when used inside [ ]', function() {
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^x[*+]y=z$/;
     
     expect( 'x*y=z' ).toMatch(fixThisPattern);
     expect( 'x+y=z' ).toMatch(fixThisPattern);
@@ -133,7 +133,7 @@ describe("Repeating Characters", function() {
     //   The quotation will be a single line (no newlines)
     //   Any other character besides newline may appear in the quotation
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^["].*["]$/;
     
     expect( '"Here today, gone tomorrow."'            ).toMatch(fixThisPattern);
     expect( '"Secant, tangent, and cosine. 3.14159!"' ).toMatch(fixThisPattern);

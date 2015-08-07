@@ -19,7 +19,7 @@ describe("Regular Expression Replacement", function() {
     
     var newString = "dog cat pony".replace( /cat/, 'lemming' );
     
-    expect( newString ).toEqual('___');
+    expect( newString ).toEqual('dog lemming pony');
   });
   
   it('the //g suffix changes "Replace One" into "Replace All"', function() {
@@ -28,8 +28,8 @@ describe("Regular Expression Replacement", function() {
     var newFirst = original.replace( /b/, "X");
     var newAll   = original.replace( /b/g, "X");
     
-    expect( newFirst ).toEqual('___');
-    expect( newAll   ).toEqual('___');
+    expect( newFirst ).toEqual('a X a b a b');
+    expect( newAll   ).toEqual('a X a X a X');
   });
   
   it('String.replace is safe even when there is no match', function() {
@@ -37,7 +37,7 @@ describe("Regular Expression Replacement", function() {
     
     var newString = original.replace(/x/g, "z");
     
-    expect( newString ).toEqual('___');
+    expect( newString ).toEqual('a b a b a b');
   });
   
   it('String.replace will replace the full match (or each full match with //g) with the new string', function() {
@@ -45,7 +45,7 @@ describe("Regular Expression Replacement", function() {
     
     var newString = original.replace(/^<div id="([^"]+)">.*?<\/div>$/g, 'newId');
     
-    expect( newString ).toEqual('___');
+    expect( newString ).toEqual('newId');
   });
   
   it('to reference a capture group, use $n inside the replacement string', function() {
@@ -57,7 +57,7 @@ describe("Regular Expression Replacement", function() {
     
     var newString = original.replace(/^<div id="([^"]+)">.*?<\/div>$/g, '$1');
     
-    expect( newString ).toEqual('___');
+    expect( newString ).toEqual('someId');
   });
   
   it('to match a full string but only replace a portion, use group captures carefully', function() {
@@ -66,7 +66,7 @@ describe("Regular Expression Replacement", function() {
     
     var newString = original.replace(/^<div id="([^"]+)">(.*?)<\/div>$/g, '<div id="$2">$1</div>');
     
-    expect( newString ).toEqual('___');
+    expect( newString ).toEqual('<div id="Hello">someId</div>');
   });
   
   // By combining all the earlier lessons of capture groups and repeating character logic
@@ -77,8 +77,8 @@ describe("Regular Expression Replacement", function() {
   it('make a URL into an HTML link', function() {
     var url = 'http://www.google.com/';
     
-    var fixThisPattern = /___/;
-    var fixThisReplacementString = '___';
+    var fixThisPattern = /(.*)/;
+    var fixThisReplacementString = '<a href="$1">$1</a>';
     
     var newString = url.replace(fixThisPattern, fixThisReplacementString);
     
@@ -88,8 +88,8 @@ describe("Regular Expression Replacement", function() {
   it('reformat a date string', function() {
     var originalDate = '20120229';
     
-    var fixThisPattern = /___/;
-    var fixThisReplacementString = '___';
+    var fixThisPattern = /(\d\d\d\d)(\d\d)(\d\d)/;
+    var fixThisReplacementString = '$2/$3/$1';
     
     var newDate = originalDate.replace(fixThisPattern, fixThisReplacementString);
     
@@ -99,8 +99,8 @@ describe("Regular Expression Replacement", function() {
   it('strip the comment from this HTML code', function() {
     var html = '<h1>My Title</h1> <!-- useless comment --> <br/>';
     
-    var fixThisPattern = /___/;
-    var fixThisReplacementString = '___';
+    var fixThisPattern = /(.*[^\s]\s)(.*[^>]>\s)(.*[^>]>)(.*[^.]>)/;
+    var fixThisReplacementString = '$1$2$4';
     
     var newHtml = html.replace(fixThisPattern, fixThisReplacementString);
     

@@ -20,12 +20,12 @@ describe("Intermission", function() {
     //   * Comma separating City and State is optional
     //   * US State will always use two uppercase letter abbreviation
     
-    var fixThisPattern = /___/;
+    var fixThisPattern = /^\s(.*[^,]),?\s([A-Z]{2})\s([0-9\-]*)$/;
     
     // in matches1[cityGroup], etc., set the index to find each value
-    var cityGroup  = ___;
-    var stateGroup = ___;
-    var zipGroup   = ___;
+    var cityGroup  = 1;
+    var stateGroup = 2;
+    var zipGroup   = 3;
     
     var matches1 = fixThisPattern.exec(' Columbus, OH 43215'           );
     var matches2 = fixThisPattern.exec(' San Francisco, CA 94118-4503' );

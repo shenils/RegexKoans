@@ -34,13 +34,13 @@ describe("Capturing Groups", function() {
     var matches1 = pattern.exec( 'My.Name01+alias@mail.gmail.com' );
     var matches2 = pattern.exec( 'simple@gmail.com'               );
     
-    expect( matches1[0]   ).toEqual('___');
-    expect( matches1[1]   ).toEqual('___');
-    expect( matches1[3]   ).toEqual('___');
-    expect( matches1[___] ).toEqual('mail.gmail.com');
+    expect( matches1[0]   ).toEqual('My.Name01+alias@mail.gmail.com');
+    expect( matches1[1]   ).toEqual('My.Name01+alias');
+    expect( matches1[3]   ).toEqual('alias');
+    expect( matches1[4] ).toEqual('mail.gmail.com');
     
-    expect( matches2[2]   ).toEqual(___);
-    expect( matches2[___] ).toEqual('.com');    // there are two possible answers here
+    expect( matches2[2]   ).toEqual();
+    expect( matches2[4] ).toEqual('gmail.com');    // there are two possible answers here
     
     // Do you recognize this pattern? It's a more complex version of the email
     // pattern from the Grouping Koan. What enhancements have been made?
@@ -54,11 +54,11 @@ describe("Capturing Groups", function() {
     //   * The id will be the only attribute inside the div tag
     //   * Only double-quote will be used (")
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^(<[a-z]+\s[a-z]+=)("[A-Za-z]*")(.*)$/;
     
     var matches = fixThisPattern.exec( '<div id="anArbitraryId"> Here is my text node! </div>' );
     
-    expect( matches[___] ).toEqual("anArbitraryId");
+    expect( matches[2] ).toEqual('"anArbitraryId"');
     
   });
   
@@ -85,15 +85,15 @@ describe("Capturing Groups", function() {
     //   * Only double-quote will be used (")
     //   * The class attribute is guaranteed to exist
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /class=\"([^\"]+)\"/;
     
     var matches1 = fixThisPattern.exec( '<div id="someId" class="boxed"> Some text here </div>' );
     var matches2 = fixThisPattern.exec( '<span class="bold red"> Error! </span>'                );
     var matches3 = fixThisPattern.exec( '<img src="image.jpg" class="framed" id="myPortrait"/>' );
     
-    expect( matches1[___] ).toEqual("boxed");
-    expect( matches2[___] ).toEqual("bold red");
-    expect( matches3[___] ).toEqual("framed");
+    expect( matches1[1] ).toEqual("boxed");
+    expect( matches2[1] ).toEqual("bold red");
+    expect( matches3[1] ).toEqual("framed");
   });
   
   it('Captured groups can be referenced within the pattern itself using backslash-n', function() {
@@ -103,7 +103,7 @@ describe("Capturing Groups", function() {
     
     var thisPatternWorks = /^([a-z]+)\d+\1$/;
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /^(["|]).*[^e]e\1$/;
     
     expect( 'ab12345ab' ).toMatch(thisPatternWorks);
     expect( 'a12345x'   ).not.toMatch(thisPatternWorks);
@@ -121,15 +121,15 @@ describe("Capturing Groups", function() {
     //   The attribute will never use a mismatch, like class="one'
     
     
-    var fixThisPattern = /^___$/;
+    var fixThisPattern = /class=[\"|\']([a-z\s]*)[\"|\']/;
     
     var matches1 = fixThisPattern.exec( '<div id="someId" class="boxed"> Some text here </div>'   );
     var matches2 = fixThisPattern.exec( "<span class='bold red'> Error! </span>"                  );
-    var matches3 = fixThisPattern.exec( '<img src="image.jpg" class=\'framed\' id="myPortrait"/>' );
+    var matches3 = fixThisPattern.exec( "<img src='image.jpg' class='framed' id='myPortrait'/>" );
     
-    expect( matches1[___] ).toEqual('boxed');
-    expect( matches2[___] ).toEqual('bold red');
-    expect( matches3[___] ).toEqual('framed');
+    expect( matches1[1] ).toEqual("boxed");
+    expect( matches2[1] ).toEqual('bold red');
+    expect( matches3[1] ).toEqual('framed');
   });
 
 });

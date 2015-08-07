@@ -10,14 +10,14 @@ describe("Greedy vs Minimal", function() {
     
     var matches = 'aabbbcc'.match( /b+/ );
 
-    expect( matches[0] ).toEqual('___');
+    expect( matches[0] ).toEqual('bbb');
     
   });
   
   it('* and + are "greedy" and may match more text than you intend', function() {
     var matches = '"One","Two","Three"'.match( /".*"/ );
     
-    expect( matches[0] ).toEqual('"One"');    // Change '"One"' so the test passes
+    expect( matches[0] ).toEqual('"One","Two","Three"');    // Change '"One"' so the test passes
   });
   
   // Greedy character matching is a common downfall of many regular expressions.
@@ -35,7 +35,7 @@ describe("Greedy vs Minimal", function() {
   it('use a negative character set to control the greedy match', function() {
     var workingMatches = '"One","Two","Three"'.match( /"[^"]*"/ );
     
-    var tagMatches = '<span class="bold">Hello, world!</span>'.match( /___/ );
+    var tagMatches = '<span class="bold">Hello, world!</span>'.match( /<[^>]*>/ );
     
     expect( workingMatches[0] ).toEqual('"One"');
     
@@ -46,7 +46,7 @@ describe("Greedy vs Minimal", function() {
     // To change * and + to non-greedy, minimal matching,
     // use *? and +? instead.
     
-    var fixThisPattern = /___/;
+    var fixThisPattern = /<\w*\s\w*=\"\w*\">/;
     
     var matches = '<span class="bold">Hello, world!</span>'.match(fixThisPattern);
 

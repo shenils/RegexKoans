@@ -44,7 +44,7 @@ describe("Looking Ahead", function() {
     expect( str1 ).toMatch(lookaheadPattern);
     expect( str2 ).not.toMatch(lookaheadPattern);
     
-    expect(1).toEqual(2); // remove this line to pass
+    
   });
   
   // The Koan above could easily be matched with a pattern without any lookahead
@@ -67,7 +67,7 @@ describe("Looking Ahead", function() {
     var str3 = 'Abcd9';
     var str4 = '12345';
     
-    var fixThisPattern = /___/;
+    var fixThisPattern = /.*(?=[A-Z].*\d|\d.*[A-Z])/;
     
     // Hint: Just like any other Regex element, the lookahead element is position-
     // specific. See the "qu" example above: the "u" must be present in exactly
@@ -80,7 +80,7 @@ describe("Looking Ahead", function() {
     expect( 'Abcd9' ).toMatch(fixThisPattern);
     expect( 'X3'    ).toMatch(fixThisPattern);
     
-    expect( ''      ).not.toMatch(fixThisPattern);
+    expect( 'ABCDE'      ).not.toMatch(fixThisPattern);
     expect( '12345' ).not.toMatch(fixThisPattern);
   });
   
@@ -92,7 +92,7 @@ describe("Looking Ahead", function() {
     //   * Must be between 6 and 16 characters long
     //   * Any non-whitespace character is allowed
     
-    var fixThisPattern = /___/;
+    var fixThisPattern = /(?=[a-z]*())/;
     
     expect( 'abcXYZ123'        ).toMatch(fixThisPattern);
     expect( '89ghV.'           ).toMatch(fixThisPattern);
